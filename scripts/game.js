@@ -3,6 +3,8 @@ let game = {
     currentGame: [],
     playerMoves: [],
     turnNumber: 0,
+    lastButton: "",
+    turnInProgress: false,
     choices: ["button1", "button2", "button3", "button4"],
 };
 
@@ -14,7 +16,7 @@ function newGame() {
     for (let circle of document.getElementsByClassName("circle")) {
         if (circle.getAttribute("data-listener") !== "true") {
             circle.addEventListener("click", (e) => {
-                if (game.currentGame.length > 0) { // only accept a click if the length of the currentGame array is greater than zero.  
+                if (game.currentGame.length > 0 && !game.turnInProgress) { // only accept a click if the length of the currentGame array is greater than zero.  
                     let move = e.target.getAttribute("id");
                     game.lastButton = move;
                     lightsOn(move);
@@ -50,12 +52,14 @@ function showTurns() {
     /* Setting a interval turning the lightsOn,
     incrementing the game turnNumber,
     and then turning them off again.*/
+    game.turnInProgress = true;
     game.turnNumber = 0;
     let turns = setInterval(function () {
         lightsOn(game.currentGame[game.turnNumber]);
         game.turnNumber++;
         if (game.turnNumber >= game.currentGame.length) {
             clearInterval(turns);
+            game.turnInProgress = false;
         }
     }, 800);
 }
