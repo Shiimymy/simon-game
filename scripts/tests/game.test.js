@@ -33,7 +33,7 @@ describe("game object contains correct keys", () => {
     });
 });
 
-describe("newGame works correcy", () => {
+describe("newGame works correctly", () => {
     beforeAll(() => {
         game.score = 42;
         game.playerMoves = ["button1", "button2"];
@@ -52,6 +52,13 @@ describe("newGame works correcy", () => {
     });
     test("should display 0 for the element with the id of score", () => {
         expect(document.getElementById("score").innerText).toEqual(0);
+    });
+    test("expect data-listener to be true", () => {
+        newGame();
+        const elements = document.getElementsByClassName("circle");
+        for (let element of elements) {
+            expect(element.getAttribute("data-listener")).toEqual("true");
+        }
     });
 });
 
