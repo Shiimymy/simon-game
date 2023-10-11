@@ -95,4 +95,9 @@ describe("gameplay works correctly", () => {
         playerTurn();
         expect(game.score).toBe(1);
     });
+    test("should call an alert if the move is wrong", () => {
+        game.playerMoves.push("wrong");
+        playerTurn();
+        expect(window.alert).toBeCalledWith("Wrong Move!");
+    });
 });
